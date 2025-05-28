@@ -1,1 +1,30 @@
+# step 1  - project setup
 
+mkdir ecommerce-monolith
+cd ecommerce-monolith
+npm init -y
+
+installing dependencies
+
+npm install express dotenv morgan cors
+npm install --save-dev nodemon
+
+
+# step 2 - creating file structure
+
+index.js
+
+routes/
+  users.js
+  products.js
+  orders.js
+
+controllers/
+  usercontrollers.js
+  productsController.js
+  ordersControllers.js
+
+.env
+package.json
+
+# step 3 - adding basic server codes
