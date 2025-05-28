@@ -24,6 +24,7 @@ app.post('/users', (req,res) => {
     res.status(201).send("user created");
 });
 
+
 //orders route
 app.post('/orders', (req,res) => {
     res.status(200).send("order successful");
