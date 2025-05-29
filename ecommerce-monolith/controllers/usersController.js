@@ -1,4 +1,3 @@
-//CONTROLLING THE USER REGISTRATION LOGIC
 // arrow function for registering user
 const registerUser = (req, res) => {
   
