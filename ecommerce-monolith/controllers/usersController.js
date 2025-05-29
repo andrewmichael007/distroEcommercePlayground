@@ -17,8 +17,5 @@ const registerUser = (req, res) => {
     return res.status(201).json ({message: "User registered", user});
 };
 
-
-  //just tryin' my hands on deleting a user
-  const deleteUser =
 //export the function
 module.exports = { registerUser };
