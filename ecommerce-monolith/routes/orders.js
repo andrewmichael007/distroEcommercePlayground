@@ -11,7 +11,7 @@ const { getOrders, makeOrders } = require("../controllers/ordersController");
 //then come and make a route for them over here
 router.get('/', getOrders);
 
-router.get('/', makeOrders);
+router.post('/', makeOrders);
 
 
 
