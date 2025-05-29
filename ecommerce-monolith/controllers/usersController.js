@@ -16,7 +16,7 @@ const registerUser = (req, res) => {
     return res.status(201).json ({message: "User registered", user});
 };
 
-  //THIS IS THE LOGIC FOR DELETING USERS
+  //THIS IS THE LOGIC FOR DELETING USERS -- NOT AT ALL CORRECT, NEEDS TO BE DEBUGGED
   //making an array of deleted users
 let deletedUsers = [];
   
@@ -41,7 +41,7 @@ const deleteUser = (req, res) => {
   };
 };
 
-  
+  // THIS IS THE UPDATING USERS LOGIC, NEEDS TO BE DEBUGGED
   //updating users
   const updateUser = (req, res) => {
     const { name, email, password } = req.body;
