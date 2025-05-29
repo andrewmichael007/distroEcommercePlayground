@@ -33,3 +33,27 @@ simulates the behavior of tools like NGINX
 npm install express-rate-limit
 const rateLimit = require("express-rate-limit");
 
+const apiLimiter = rateLimit ({
+--this is the time window
+ windowMs: parseInt(  
+--this is the number of requests
+ max: parseInt(
+ message: "Too many requests, try after an hour",
+});
+
+# STEP 4
+-- simulating  Latency and Timeout Handling
+//simulated latency
+const randomDelay = Math.floor(Math.random() * 200); //
+setTimeout(() => next(), randomDelay;
+});
+
+// Simulate timeout failure for test route
+app.get('/simulate-timeout', (req, res) => {
+  setTimeout(() => {
+    res.status(504).json({ message: 'Gateway Timeout: Service too slow' });
+  }, 6000); // 6 sec
+});
+
+
+
