@@ -5,7 +5,12 @@ const cors = require("cors");
 
 //logs HTTP requests.
 const morgan = require("morgan");
-require("dotenv).config();
+require("dotenv").config();
+
+//using helmet for protection against click jacking, cross sitee scripting
+const helmet = require("helmet");
+app.use(helmet());
+
 
 //storing routes
 const userRoutes = require("./routes/users");
@@ -32,5 +37,5 @@ app.use('/orders', orderRoutes);
 // Fallback route
 app.use((req, res) => res.status(404).send('Route not found'));
 
-//listening 
+//listening
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
