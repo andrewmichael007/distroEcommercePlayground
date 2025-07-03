@@ -11,22 +11,24 @@ const express = require("express"); //introduces express framework into project
 const app = express(); // builds a mini server called app with express
 app.use(express.json()); // understands json formats of data
 
-// *******products route********
-// this route is when a user is trying to get something from the server from the products routes
-app.get('/products', (req,res) => {
-    res.json([{id : 1, name : "Product A"}]);
-});
 
 // ******users route******
 //this route is for when a new user is created, this sends a message to the server. the server returns with 
 // status code 201 indicating successful user creation
-app.post('/users', (req,res) => {
+app.post('/users', (req, res) => {
     res.status(201).send("user created");
 });
 
 
+// *******products route********
+// this route is when a user is trying to get something from the server from the products routes
+app.get('/products', (req, res) => {
+    res.json([{id : 1, name : "Product A"}]);
+});
+
+
 //orders route
-app.post('/orders', (req,res) => {
+app.post('/orders', (req, res) => {
     res.status(200).send("order successful");
 });
 
@@ -34,3 +36,8 @@ app.post('/orders', (req,res) => {
 app.listen(3000, () => {
     console.log("server running on port 3000!");
 });
+
+
+app.post('/test', (req, res) => {
+    res.status()
+})
