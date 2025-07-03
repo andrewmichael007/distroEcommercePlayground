@@ -9,7 +9,7 @@
 // require statements
 const express = require("express"); //introduces express framework into project
 const app = express(); // builds a mini server called app with express
-app.use(express.json()); // understands json formats of data 
+app.use(express.json()); // understands json formats of data
 
 // *******products route********
 // this route is when a user is trying to get something from the server from the products routes
