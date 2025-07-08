@@ -9,7 +9,6 @@ require("dotenv").config();
 
 //using helmet for protection against click jacking, cross sitee scripting
 const helmet = require("helmet");
-app.use(helmet());
 
 
 //storing routes
@@ -23,7 +22,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(morgan());
+app.use(morgan("dev"));
+app.use(helmet());
+
 
  //parses incoming JSON requests
 app.use(express.json());
