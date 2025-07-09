@@ -1,4 +1,6 @@
-// arrow function for registering user
+
+
+//REGISTERING A USER
 const registerUser = (req, res) => {
   
   const { name, email, password } = req.body;
@@ -9,19 +11,22 @@ const registerUser = (req, res) => {
     //create a new user
     const user = {
       id: Date.now(),
-      name, 
-      email 
+      name,
+      email,
+      password
     };
+
     // return a message to show that new user is created
     return res.status(201).json ({message: "User registered", user});
-};
+  };
 
+};
   //THIS IS THE LOGIC FOR DELETING USERS -- NOT AT ALL CORRECT, NEEDS TO BE DEBUGGED
   //making an array of deleted users
 let deletedUsers = [];
   
 //let's say i want to delete a user
-const deleteUser = (req, res) => {
+const deletedUser = (req, res) => {
   
   const { name, email,  password } = req.body;
   
@@ -31,8 +36,10 @@ const deleteUser = (req, res) => {
     const deletedUser = {
       id: Date.now(),
       name: " ",
-      email: " " 
+      email: " ",
+      password: " "
     };
+
     //adding deleted user to the array  of deleted users
     deletedUsers.push(deletedUser);
 
@@ -41,12 +48,5 @@ const deleteUser = (req, res) => {
   };
 };
 
-  // THIS IS THE UPDATING USERS LOGIC, NEEDS TO BE DEBUGGED
-  //updating users
-  const updateUser = (req, res) => {
-    const { name, email, password } = req.body;
-
-    
-  };
-//export the function
-module.exports = { registerUser, deleteUser };
+//exporting functions
+module.exports = { registerUser, deletedUser };
