@@ -1,7 +1,5 @@
 
-//THIS IS THE CONTROLLING LOGIC FOR THE ORDER ROUTE
-
-//ROUTE FOR CREATING AND PLACING ORDERS
+//this holds the logic for creating and the placing orders
 
 //creating an array of empty orders
 let allOrders = [];
@@ -25,7 +23,7 @@ const placeOrder = (req, res) => {
       status: "placed",
       createdAt: new Date(),
     };
-  }
+  } 
 
   //adding the created order to the empty array of orders created above
   allOrders.push(order);
@@ -36,8 +34,4 @@ const placeOrder = (req, res) => {
 };
 
 
-//getting of orders
-const getOrders = (req, res) => {
-  res.json({ orders: mockers });
-};
-
+module.exports = { placeOrder };
