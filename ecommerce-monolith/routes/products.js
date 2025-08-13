@@ -1,10 +1,12 @@
 //routing the routes/products
 const express = require("express");
-const router = express.router();
+const router = express.Router();
 
-const { getProducts, addProducts } = require("../controllers/productsController");
+const {  addProduct, getProducts } = require("../controllers/productsController");
 
-router.get("/", getProducts);
-router.post("/", addProducts);
+// Route to add products
+router.post("/product", addProduct );
+
+router.get("/products", getProducts );
 
 module.exports = router;
