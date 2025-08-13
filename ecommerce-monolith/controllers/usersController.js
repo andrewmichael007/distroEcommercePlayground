@@ -1,12 +1,14 @@
 
-
-//REGISTERING A USER
+//this holds the logic for registering a user
 const registerUser = (req, res) => {
   
   const { name, email, password } = req.body;
   
   if (!name || !email  || !password) {
-    return res.status(400).json({message: "Missing fields"});
+    return res.status(400).json({
+      success: false,
+      message: "Fill missings fields"
+    });
   } else {
     //create a new user
     const user = {
@@ -15,38 +17,20 @@ const registerUser = (req, res) => {
       email,
       password
     };
-
     // return a message to show that new user is created
-    return res.status(201).json ({message: "User registered", user});
+    return res.status(201).json ({
+      success: true,
+      message: "User registered", 
+      data: user
+    });
   };
 
 };
-  //THIS IS THE LOGIC FOR DELETING USERS -- NOT AT ALL CORRECT, NEEDS TO BE DEBUGGED
-  //making an array of deleted users
-let deletedUsers = [];
-  
-//let's say i want to delete a user
-const deletedUser = (req, res) => {
-  
-  const { name, email,  password } = req.body;
-  
-  if (!name || !email || !password){
-    res.status(400).json({ message: "Missing fields" });
-  } else {
-    const deletedUser = {
-      id: Date.now(),
-      name: " ",
-      email: " ",
-      password: " "
-    };
 
-    //adding deleted user to the array  of deleted users
-    deletedUsers.push(deletedUser);
+// 2. Functions for get user
+// 3. Functions for update user
+// 4. Functions for deleted user
 
-    //send out a json message to show that user is deleted
-    res.status(200).json({ message: "User Deleted" });
-  };
-};
 
 //exporting functions
-module.exports = { registerUser, deletedUser };
+module.exports = { registerUser };
