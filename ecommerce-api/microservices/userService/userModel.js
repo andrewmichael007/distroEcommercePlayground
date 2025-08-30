@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
 
     name:{
-        type: String, 
+        type: String,
         required: true
     },
 
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     },
 
     password: {
-      type: String, 
+      type: String,
       required: true
     },
   
@@ -51,4 +51,4 @@ const userSchema = new mongoose.Schema({
 });
 
 // export module with the name of the file and name of the schema formed
-module.exports = mongoose.model(/*filename*/ "bugModel",  bugSchema /*function*/);
+module.exports = mongoose.model(/*filename*/ "userModel",  userSchema /*function*/);
