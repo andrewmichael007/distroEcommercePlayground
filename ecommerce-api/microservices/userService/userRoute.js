@@ -4,17 +4,24 @@ const express = require("express");
 
 const router = express.Router();
 
-const { register , validator } = require("./userController.js");
+//the functions created in the controller
+const { register , validator , login } = require("./userController.js");
 
 
 //then come and make a route for them over here
 router.post(
 
-    "/register",
+    "/users/register",
 
     validator,
 
-    register
+    register,
+);
+
+router.post (
+    "/users/login",
+
+    login
 );
 
 module.exports = router;
