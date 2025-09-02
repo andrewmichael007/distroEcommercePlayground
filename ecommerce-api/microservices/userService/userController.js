@@ -5,6 +5,8 @@ const { body, validationResult } = require("express-validator");
 
 const bcrypt = require("bcrypt");
 
+const jwt  = require("jsonwebtoken");
+
 //requiring the unique identifier
 const { v4: uuidv4 } = require("uuid");
 
@@ -80,42 +82,76 @@ const register =  async ( req, res ) => {
         });
     } catch (error){
         console.error (error);
-    }
+    };
 
-}
-
+};
 
 //LOGIN
 const login = async ( req, res) => {
 
-    //define the request body
-    const { username , password } = req.body;
+    try {
+        //define the request body
+        const { username , password, email } = req.body;
 
-    //checking if username exists
-    const existingUserByEmail = await User.findOne({ email });
+        //checking if username exists
+        const existingUser = await User.findOne({ email });
 
-    if ( !existingUserByEmail ) { 
-        return res.status(400).json({
-            success: false ,
-            message: " user does not exist "
+        if ( !existingUser ) {
+            return res.status(400).json({
+                success: false ,
+                message: " user does not exist "
+            });
+        };
+
+        //comparing password
+        // options
+        const passwordMatch = await bcrypt.compare( password, existingUser.password );
+
+        if ( !passwordMatch ) {
+            return res.status(400).json({
+                success : false,
+                message : " password does not match "
+            });
+        };
+
+        //if all two checks pass ... create and return a jwt for user authentication
+        //payload - the data to store the token
+        // secret 
+        // options
+        const token = jwt.sign (
+            { id : existingUser._id },
+            process.env.JWT_SECRET,
+            { expiresIn : "1h"}
+        );
+
+        console.log (token);
+
+        res.status(200).json({
+            success: true,
+            message: "login successful",
+            token,
+            data: {
+                id: existingUser._id,
+                name: existingUser.name,
+                email: existingUser.email,
+                username: existingUser.username
+            }
+        });
+    } catch (error){
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "internal server error"
         });
     };
-
-    //comparing password
-    const passwordMatch = await bcrypt.compare( password, User.password );
-
-    if ( !passwordMatch ) { 
-        return res.status(400).json({
-            success : false,
-            message : " password does not match "
-        });
-    };
-
 
 };
 
 //export module
-module.exports = { 
-    register, 
-    validator
+module.exports = {
+    register,
+
+    validator,
+
+    login
 };
