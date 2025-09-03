@@ -1,10 +1,11 @@
+//THIS IS THE SERVER
 
 //require statements
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoute = require( "./userRoute" );
 
-
+//loading the environment variables
 require("dotenv").config();
 
 //builds a mini server call app
@@ -19,7 +20,6 @@ app.use(express.json());
 // create user server mount
 app.use( '/', userRoute);
 
-
 //mongodb connection
 mongoose.connect(process.env.USER_SERVICE_MONGO_URI, {
     // deprecated in mongoose 6.x
@@ -27,10 +27,10 @@ mongoose.connect(process.env.USER_SERVICE_MONGO_URI, {
     // useUnifiedTopology: true,
     // useCreateIndex: true,
 })
-.then(() => 
-    console.log("mongodb connected to user serviceDb😎")
+.then(() =>
+    console.log("Mongodb connected to user the user service database")
 )
-.catch(err => 
+.catch(err =>
     console.error(err)
 );
 
@@ -39,6 +39,9 @@ const port = process.env.USER_SERVICE_PORT;
 
 //listening for incoming requests
 app.listen(port, () => {
-    console.log(`server is running on port ${port}!🚀 for the user service`);
+    console.log("*************************************");
+    console.log(`server is running on port ${port}!🚀`);
+    console.log("*************************************");
+
 });
 
