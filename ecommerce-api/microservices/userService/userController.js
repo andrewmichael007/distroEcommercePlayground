@@ -1,11 +1,9 @@
-//requires the user model
+
+//requiring the necessary modules
 const User = require("./userModel.js");
-
-const { body, validationResult } = require("express-validator");
-
 const bcrypt = require("bcrypt");
-
 const jwt  = require("jsonwebtoken");
+const { body, validationResult } = require("express-validator");
 
 //requiring the unique identifier
 const { v4: uuidv4 } = require("uuid");
@@ -16,15 +14,15 @@ const validator = [
     body('email').isEmail().withMessage("invalid email"),
     body('username').trim().notEmpty().withMessage("message is required"),
     body('password').notEmpty().isLength({ min: 6 }).withMessage("password is required and must be at least 6 characters")
+
 ];
 
-//REGISTRATION
-//creation of the register arrow function
+//registration logic / controller
 const register =  async ( req, res ) => {
-
 
     const errors =  validationResult(req);
 
+    //checking if errors are not empty, send validation failed.
     if( !errors.isEmpty() ) {
         return res.status(400).json({
             success: false,
@@ -59,7 +57,7 @@ const register =  async ( req, res ) => {
             "hashedPassword: " , hashedPassword
         );
 
-        //real creation
+        //create new user
         const user = new User({
             id : uuidv4(),
             name,
@@ -81,12 +79,16 @@ const register =  async ( req, res ) => {
             data : user
         });
     } catch (error){
-        console.error (error);
+        console.log(error);
+        res.status(400).json({
+            success: false,
+            message : "error registering user"
+        });
     };
 
 };
 
-//LOGIN
+//login logic
 const login = async ( req, res) => {
 
     try {
@@ -96,6 +98,7 @@ const login = async ( req, res) => {
         //checking if username exists
         const existingUser = await User.findOne({ email });
 
+        // if existing user is false, thus empty, meaning user does not exist
         if ( !existingUser ) {
             return res.status(400).json({
                 success: false ,
@@ -104,9 +107,15 @@ const login = async ( req, res) => {
         };
 
         //comparing password
-        // options
         const passwordMatch = await bcrypt.compare( password, existingUser.password );
 
+        //debug
+        console.log(
+            "password entered by user : " , password,
+            "password in database: " , existingUser.password
+        )
+
+        //check if password is false
         if ( !passwordMatch ) {
             return res.status(400).json({
                 success : false,
@@ -116,7 +125,7 @@ const login = async ( req, res) => {
 
         //if all two checks pass ... create and return a jwt for user authentication
         //payload - the data to store the token
-        // secret 
+        // secret
         // options
         const token = jwt.sign (
             { id : existingUser._id },
