@@ -88,7 +88,7 @@ const register =  async ( req, res ) => {
 
 };
 
-//login logic
+//login logic / controller
 const login = async ( req, res) => {
 
     try {
@@ -156,11 +156,33 @@ const login = async ( req, res) => {
 
 };
 
+//getting user logic / controller
+const getUser = async ( req , res ) =>  { 
+    try{
+        //check if user exists by id
+        const existingUser = await User.findOne({ "id" : id });
+
+        if ( !existingUser ){
+            console.log("user doesnt not exist")
+        }
+
+        console.log("user exists")
+
+    } catch(error) {
+        console.log(error)
+        console.log("failed")
+    };
+};
+
+
+
 //export module
 module.exports = {
     register,
 
     validator,
 
-    login
+    login, 
+
+    getUser
 };
