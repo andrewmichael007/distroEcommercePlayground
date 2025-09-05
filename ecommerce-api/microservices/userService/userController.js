@@ -159,26 +159,45 @@ const login = async ( req, res) => {
 //getting user logic / controller
 const getUser = async ( req , res ) =>  {
 
-    //we set the id to request 
+    //extracts id from request body by destructuring
     const { id } = req.params;
 
     try{
         //check if user exists by id
         const existingUser = await User.findById( id );
 
+        //if user doesn't exist
         if ( !existingUser ){
+            res.status(400).json({
+                success : false, 
+                message : "user does not exist"
+            });
+            //log output to the console
             console.log("user doesnt not exist")
         }
 
-        console.log("user exists")
+        //send a response if user exists
+        res.status(200).json({
+            success: true,
+            message: "user found",
+            data : existingUser
+        });
 
+        //log response to the console
+        console.log("user exists : ", existingUser);
+    
+        //catch any error in the course of the process
     } catch(error) {
+        res.status(500).json({
+            success: false, 
+            message : "internal server error"
+        });
         console.log(error)
-        console.log("failed")
+
+        //log error to the console
+        console.log("process failed")
     };
 };
-
-
 
 //export module
 module.exports = {
