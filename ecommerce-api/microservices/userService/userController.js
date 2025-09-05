@@ -157,10 +157,14 @@ const login = async ( req, res) => {
 };
 
 //getting user logic / controller
-const getUser = async ( req , res ) =>  { 
+const getUser = async ( req , res ) =>  {
+
+    //we set the id to request 
+    const { id } = req.params;
+
     try{
         //check if user exists by id
-        const existingUser = await User.findOne({ "id" : id });
+        const existingUser = await User.findById( id );
 
         if ( !existingUser ){
             console.log("user doesnt not exist")
@@ -182,7 +186,7 @@ module.exports = {
 
     validator,
 
-    login, 
+    login,
 
     getUser
 };
