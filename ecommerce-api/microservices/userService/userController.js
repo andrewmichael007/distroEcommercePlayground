@@ -109,12 +109,6 @@ const login = async ( req, res) => {
         //comparing password
         const passwordMatch = await bcrypt.compare( password, existingUser.password );
 
-        //debug
-        console.log(
-            "password entered by user : " , password,
-            "password in database: " , existingUser.password
-        )
-
         //check if password is false
         if ( !passwordMatch ) {
             return res.status(400).json({
@@ -122,6 +116,12 @@ const login = async ( req, res) => {
                 message : " password does not match "
             });
         };
+
+        //debug
+        console.log(
+            "password entered by user : " , password,
+            "password in database: " , existingUser.password
+        )
 
         //if all two checks pass ... create and return a jwt for user authentication
         //payload - the data to store the token
@@ -189,13 +189,59 @@ const getUser = async ( req , res ) =>  {
         //catch any error in the course of the process
     } catch(error) {
         res.status(500).json({
-            success: false, 
+            success: false,
             message : "internal server error"
         });
         console.log(error)
 
         //log error to the console
         console.log("process failed")
+    };
+};
+
+const updateUser = async ( req , res ) => {
+    
+    //finding the user to update by id
+    const { id } = req.params;
+
+    //defining the request body
+    const { name, email, username, password } = req.body;
+
+    try {
+        //check if user exists 
+        const existingUser = await User.findById(id);
+
+        if ( !existingUser ) { 
+            res.status(400).json({
+                success : false, 
+                message : "user doesn't exist"
+            });  
+        };
+
+        //if user exists, update
+        existingUser.name = name;
+        existingUser.email = email;
+        existingUser.username = username;
+        existingUser.password = password;
+
+        //save
+        const updatedUser = await existingUser.save();
+
+        res.status(200).json({
+            success : true,
+            message : "user updated successfully",
+            data : updatedUser
+        });
+
+        //log the updated user
+        console.log("updated user : ", updatedUser);
+
+    //any error during the whole process ? log it out.
+    } catch (error) {
+        res.status(500).json({
+            success : false,
+            message : "updating user failed"
+        });
     };
 };
 
@@ -207,5 +253,7 @@ module.exports = {
 
     login,
 
-    getUser
+    getUser,
+
+    updateUser
 };
