@@ -199,6 +199,7 @@ const getUser = async ( req , res ) =>  {
     };
 };
 
+//updating the user logic / controller 
 const updateUser = async ( req , res ) => {
     
     //finding the user to update by id
@@ -245,6 +246,37 @@ const updateUser = async ( req , res ) => {
     };
 };
 
+//delete logic /controller
+const deleteUser = async ( res , req ) => {
+
+    //destructuring the id
+    const { id }  = req.params;
+
+    try {
+        //check whether exists
+        const existingUser = await User.findById( id );
+
+        if ( !existingUser ) {
+            res.status(404).json({
+                success : false,
+                message : " user does not exist "
+            });
+        };
+
+        const deletedUser = await existingUser.deleteOne({ _id: id });
+
+        console.log ( " deletedUser : " , deletedUser );
+
+        //catch error or any occurs
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: " deleting user failed "
+        });
+    };
+};
+
+
 //export module
 module.exports = {
     register,
@@ -255,5 +287,7 @@ module.exports = {
 
     getUser,
 
-    updateUser
+    updateUser, 
+
+    deleteUser
 };
