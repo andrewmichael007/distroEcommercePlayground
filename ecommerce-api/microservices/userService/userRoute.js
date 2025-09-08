@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 
 //the functions created in the controller
-const { register , validator , login , getUser, updateUser } = require("./userController.js");
+const { register , validator , login , getUser, updateUser, deleteUser } = require("./userController.js");
 
 
 //then come and make a route for them over here
@@ -39,6 +39,13 @@ router.put (
     "/users/:id",
 
     updateUser
+);
+
+//delete user route
+router.delete (
+    "/users/:id",
+
+    deleteUser
 );
 
 module.exports = router;
