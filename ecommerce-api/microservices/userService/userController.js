@@ -14,7 +14,6 @@ const validator = [
     body('email').isEmail().withMessage("invalid email"),
     body('username').trim().notEmpty().withMessage("message is required"),
     body('password').notEmpty().isLength({ min: 6 }).withMessage("password is required and must be at least 6 characters")
-
 ];
 
 //registration logic / controller
@@ -247,7 +246,10 @@ const updateUser = async ( req , res ) => {
 };
 
 //delete logic /controller
-const deleteUser = async ( res , req ) => {
+const deleteUser = async ( req , res ) => {
+
+    //debug: log the parameters
+    // console.log(req.params.id);
 
     //destructuring the id
     const { id }  = req.params;
@@ -257,25 +259,34 @@ const deleteUser = async ( res , req ) => {
         const existingUser = await User.findById( id );
 
         if ( !existingUser ) {
-            res.status(404).json({
+            return res.status(404).json({
                 success : false,
                 message : " user does not exist "
             });
         };
 
+        //debug
+        // console.log("user exists");
+
+        //deleting user
         const deletedUser = await existingUser.deleteOne({ _id: id });
 
+        res.status(200).json({
+            success: true, 
+            message: " user deleted "
+        });
+
+        //log the output to the console
         console.log ( " deletedUser : " , deletedUser );
 
         //catch error or any occurs
     } catch (error) {
-        res.status(400).json({
+        return res.status(500).json({
             success: false,
             message: " deleting user failed "
         });
     };
 };
-
 
 //export module
 module.exports = {
@@ -287,7 +298,7 @@ module.exports = {
 
     getUser,
 
-    updateUser, 
+    updateUser,
 
     deleteUser
 };
