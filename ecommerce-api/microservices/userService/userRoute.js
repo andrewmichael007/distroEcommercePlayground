@@ -11,42 +11,19 @@ const { register , validator , login , getUser, updateUser, deleteUser } = requi
 
 //then come and make a route for them over here
 //register route
-router.post(
-
-    "/users/register",
-
-    validator,
-
-    register,
-);
+router.post( "/users/register", validator, register, );
 
 //login route
-router.post (
-    "/users/login",
-
-    login
-);
+router.post ( "/users/login", login );
 
 //get user route
-router.get (
-    "/users/:id",
-
-    getUser
-);
+router.get ( "/users/:id", getUser );
 
 //update user route
-router.put (
-    "/users/:id",
-
-    updateUser
-);
+router.put ( "/users/:id", updateUser );
 
 //delete user route
-router.delete (
-    "/users/:id",
-
-    deleteUser
-);
+router.delete ( "/users/:id", deleteUser );
 
 module.exports = router;
 

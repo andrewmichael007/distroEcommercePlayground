@@ -289,16 +289,4 @@ const deleteUser = async ( req , res ) => {
 };
 
 //export module
-module.exports = {
-    register,
-
-    validator,
-
-    login,
-
-    getUser,
-
-    updateUser,
-
-    deleteUser
-};
+module.exports = { register, validator, login, getUser, updateUser, deleteUser };
