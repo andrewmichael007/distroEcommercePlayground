@@ -1,1 +1,54 @@
+version: '3.8'
+services:
+  user-service:
+    build: ./user-service
+    ports:
+      - "4001:4001"
+    environment:
+      - MONGO_URI=mongodb://mongo-users:27017/users
+      - JWT_SECRET=supersecret
+      - PORT=4001
+    depends_on:
+      - mongo-users
+
+  mongo-users:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "4002:4002"
+    depends_on:
+      - mongo-products
+
+  mongo-products:
+    image: mongo
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "4003:4003"
+    depends_on:
+      - mongo-orders
+
+  mongo-orders:
+    image: mongo
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  api-gateway:
+    image: nginx:latest
+    volumes:
+      - ./api-gateway/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
 
