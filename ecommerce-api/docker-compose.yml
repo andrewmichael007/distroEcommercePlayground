@@ -19,7 +19,7 @@ services:
   product-service:
     build: ./product-service
     ports:
-      - "4002:4002"
+      - "3001:3001"
     depends_on:
       - mongo-products
 
@@ -29,12 +29,24 @@ services:
   order-service:
     build: ./order-service
     ports:
-      - "4003:4003"
+      - "3002:3002"
     depends_on:
       - mongo-orders
 
   mongo-orders:
     image: mongo
+
+  payment-service:
+    build: ./payment-service
+    ports: 
+      - "3003:3003"
+    depends_on:
+      -mongo-payment
+  
+  mongo-payment:
+    image: mongo
+  
+
 
   redis:
     image: redis
