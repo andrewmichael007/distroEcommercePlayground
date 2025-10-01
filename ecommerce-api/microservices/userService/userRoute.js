@@ -8,7 +8,6 @@ const router = express.Router();
 //the functions created in the controller
 const { register , validator , login , getUser, updateUser, deleteUser } = require("./userController.js");
 
-
 //then come and make a route for them over here
 //register route
 router.post( "/v1/users/register", validator, register, );
