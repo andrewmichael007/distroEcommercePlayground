@@ -1,4 +1,3 @@
-
 //requiring the necessary modules
 const User = require("./userModel.js");
 const bcrypt = require("bcrypt");
@@ -215,7 +214,7 @@ const updateUser = async ( req , res ) => {
             res.status(400).json({
                 success : false, 
                 message : "user doesn't exist"
-            });  
+            });
         };
 
         //if user exists, update
