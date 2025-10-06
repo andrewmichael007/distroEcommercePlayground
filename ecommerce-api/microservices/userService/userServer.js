@@ -13,6 +13,7 @@ const app = express();
 
 //understands json format of data - middleware
 app.use(express.json());
+
 // app.use(express.urlencoded({ extended: true }));
 
 //server mounting at "/" +  route path = final url "/register"
